@@ -1,0 +1,31 @@
+#terminal {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 999999;
+  width: 600px;
+  height: 400px;
+  background: rgba(0, 0, 0, 1);
+  overflow: auto;
+  color: lightgreen;
+  font-family: monospace;
+  padding: 1em;
+  line-height: 1.25em;
+}
+
+#terminal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999998;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+#terminal .message {
+  
+}
