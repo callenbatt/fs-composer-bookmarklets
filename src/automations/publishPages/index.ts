@@ -28,6 +28,7 @@ class PublishPages {
     for (let domainPages of this.allPages) {
       await this.publishPagesUnderDomain(domainPages);
     }
+    this.terminal.pushMessage("Done!");
   }
 
   async fetchDomains() {
