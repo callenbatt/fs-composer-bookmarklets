@@ -61,7 +61,7 @@ export class Terminal {
   pushMessage(message: string) {
     let messageEl = document.createElement("div");
     messageEl.className = "message";
-    messageEl.textContent = message;
+    messageEl.innerHTML = message;
     this.messageWindowElement.appendChild(messageEl);
     this.updateMessageWindowScroll();
   }
