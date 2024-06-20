@@ -63,7 +63,7 @@ class PublishPages {
       );
       // await publishPage(page.id);
     } else {
-      this.terminal.pushMessage(`${"-".repeat(index)}${page.name}`);
+      this.terminal.pushMessage(`${"- ".repeat(index)}${page.name}`);
     }
     const childPages = domainPages.filter(
       (childPage) => childPage.parent_id === page.id
