@@ -1,3 +1,9 @@
 import { publishPages } from "./automations/publishPages";
 
-if (false) publishPages();
+declare global {
+  interface Window {
+    publishPages: () => void;
+  }
+}
+
+window.publishPages = publishPages;
