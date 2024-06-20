@@ -2,9 +2,15 @@ import { PublishPages } from "./automations/publishPages";
 
 declare global {
   interface Window {
-    publishPages: () => void;
+    automations: {
+      publishPages: () => void;
+    };
   }
 }
 
-const publishPagesAutomation = new PublishPages();
-publishPagesAutomation.exec();
+window.automations = {
+  publishPages: () => {
+    const publishPagesAutomation = new PublishPages();
+    publishPagesAutomation.exec();
+  },
+};

@@ -24,7 +24,7 @@ javascript: void (() => {
     (t.crossOrigin = !0),
     (t.src = "https://fs-composer-bookmarks.vercel.app/assets/index.js"),
     (t.onload = () => {
-      window.publishPages();
+      window.automations.publishPages();
     }),
     document.body.appendChild(t);
 })();
