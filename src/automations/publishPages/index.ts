@@ -58,7 +58,7 @@ class PublishPages {
       this.terminal.pushMessage(
         `${"-".repeat(index)}${page.name}: Publishing...`
       );
-      await publishPage(page.id);
+      // await publishPage(page.id);
     } else {
       this.terminal.pushMessage(`${"-".repeat(index)}${page.name}`);
     }
