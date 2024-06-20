@@ -65,4 +65,9 @@ export class Terminal {
     this.messageWindowElement.appendChild(messageEl);
     this.updateMessageWindowScroll();
   }
+
+  removeTerminal() {
+    this.terminalElement.remove();
+    this.overlayElement.remove();
+  }
 }

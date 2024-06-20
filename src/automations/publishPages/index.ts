@@ -1,4 +1,5 @@
 import { Terminal } from "../../components/terminal";
+import { delay } from "../../components/tools";
 import {
   listDomains,
   listPages,
@@ -29,6 +30,8 @@ class PublishPages {
       await this.publishPagesUnderDomain(domainPages);
     }
     this.terminal.pushMessage("Done!");
+    await delay(3000);
+    this.terminal.removeTerminal();
   }
 
   async fetchDomains() {
