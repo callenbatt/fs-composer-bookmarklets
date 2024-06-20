@@ -20,6 +20,7 @@ export type DomainPages = {
 
 export type Page = {
   branch: boolean;
+  domain_id: number;
   id: number;
   name: string;
   parent_id: number | null;

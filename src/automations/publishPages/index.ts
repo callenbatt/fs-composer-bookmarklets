@@ -6,28 +6,76 @@ import {
   publishPage,
 } from "../../components/composer";
 
-import { DomainPages, Page } from "../../components/composer/@types";
+import { Domain, DomainPages, Page } from "../../components/composer/@types";
 
-function findUnpublishedPages(domainPages: DomainPages[]) {
-  let pages: Page[] = [];
-  domainPages.forEach((domainPage) => {
-    domainPage.pages.forEach((page) => {
-      if (page.status_id !== 2) {
-        pages.push(page);
-      }
-    });
-  });
-  return pages;
+interface PublishPages {
+  terminal: Terminal;
+  domains: Domain[];
+  allPages: DomainPages[];
+  allPagesUnpublished: Page[];
 }
 
-export async function publishPages() {
-  const terminal = new Terminal();
-  terminal.pushMessage("Fetching domains...");
-  const domains = await listDomains();
-  terminal.pushMessage(`Found ${domains.length} domains`);
-  terminal.pushMessage("Fetching pages...");
-  const domainPages = await listAllPages(domains);
-  const pages = findUnpublishedPages(domainPages);
-  console.log(pages);
-  terminal.pushMessage(`Found ${pages.length} domain pages`);
+class PublishPages {
+  constructor() {
+    this.terminal = new Terminal();
+  }
+
+  async exec() {
+    this.domains = await this.fetchDomains();
+    this.allPages = await this.fetchAllPages();
+    this.allPagesUnpublished = this.filterAllPagesUnpublished();
+    for (let domainPages of this.allPages) {
+      await this.publishPagesUnderDomain(domainPages);
+    }
+  }
+
+  async fetchDomains() {
+    this.terminal.pushMessage("Fetching domains...");
+    const domains = await listDomains();
+    this.terminal.pushMessage(`Found ${this.domains.length} domains`);
+    return domains;
+  }
+
+  async fetchAllPages() {
+    this.terminal.pushMessage("Fetching pages...");
+    return listAllPages(this.domains);
+  }
+
+  filterAllPagesUnpublished() {
+    return this.allPages
+      .map((domainPage) => {
+        return domainPage.pages.filter((page) => page.status_id !== 2);
+      })
+      .flat();
+  }
+
+  async recursivelyPublishPages(
+    page: Page,
+    domainPages: Page[],
+    index: number
+  ) {
+    if (page.status_id !== 2 && page.branch === false) {
+      this.terminal.pushMessage(
+        `${"-".repeat(index)}${page.name}: Publishing...`
+      );
+      await publishPage(page.id);
+    } else {
+      this.terminal.pushMessage(`${"-".repeat(index)}${page.name}`);
+    }
+    const childPages = domainPages.filter(
+      (childPage) => childPage.parent_id === page.id
+    );
+    for (let childPage of childPages) {
+      await this.recursivelyPublishPages(childPage, domainPages, index + 1);
+    }
+  }
+
+  async publishPagesUnderDomain(domainPages: DomainPages) {
+    const rootPages = domainPages.pages.filter(
+      (page) => page.parent_id === null
+    );
+    for (let rootPage of rootPages) {
+      await this.recursivelyPublishPages(rootPage, domainPages.pages, 1);
+    }
+  }
 }
