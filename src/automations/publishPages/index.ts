@@ -33,7 +33,7 @@ class PublishPages {
   async fetchDomains() {
     this.terminal.pushMessage("Fetching domains...");
     const domains = await listDomains();
-    this.terminal.pushMessage(`Found ${this.domains.length} domains`);
+    this.terminal.pushMessage(`Found ${domains.length} domains`);
     return domains;
   }
 
