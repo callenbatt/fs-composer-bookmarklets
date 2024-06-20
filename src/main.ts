@@ -1,4 +1,4 @@
-import { publishPages } from "./automations/publishPages";
+import { PublishPages } from "./automations/publishPages";
 
 declare global {
   interface Window {
@@ -6,4 +6,5 @@ declare global {
   }
 }
 
-publishPages();
+const publishPagesAutomation = new PublishPages();
+publishPagesAutomation.exec();

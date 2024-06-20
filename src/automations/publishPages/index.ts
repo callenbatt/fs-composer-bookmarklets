@@ -24,6 +24,7 @@ class PublishPages {
     this.domains = await this.fetchDomains();
     this.allPages = await this.fetchAllPages();
     this.allPagesUnpublished = this.filterAllPagesUnpublished();
+    this.terminal.pushMessage(`Found ${this.allPagesUnpublished.length} pages`);
     for (let domainPages of this.allPages) {
       await this.publishPagesUnderDomain(domainPages);
     }
@@ -79,3 +80,5 @@ class PublishPages {
     }
   }
 }
+
+export { PublishPages };
