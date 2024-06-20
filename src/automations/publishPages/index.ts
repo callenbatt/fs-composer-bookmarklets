@@ -61,7 +61,7 @@ class PublishPages {
           page.name
         }: <span class="yellow">Publishing...</span>`
       );
-      // await publishPage(page.id);
+      await publishPage(page.id);
     } else {
       this.terminal.pushMessage(`${"- ".repeat(index)}${page.name}`);
     }
