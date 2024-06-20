@@ -32,3 +32,11 @@
 #terminal-message-window {
   overflow: auto;
 }
+
+#terminal .yellow {
+  color: yellow
+}
+
+#terminal .red {
+  color: red
+}

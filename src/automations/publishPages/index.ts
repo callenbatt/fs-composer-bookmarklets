@@ -57,7 +57,9 @@ class PublishPages {
   ) {
     if (page.status_id !== 2 && page.branch === false) {
       this.terminal.pushMessage(
-        `${"-".repeat(index)}${page.name}: Publishing...`
+        `${"- ".repeat(index)}${
+          page.name
+        }: <span class="yellow">Publishing...</span>`
       );
       // await publishPage(page.id);
     } else {
@@ -72,6 +74,9 @@ class PublishPages {
   }
 
   async publishPagesUnderDomain(domainPages: DomainPages) {
+    this.terminal.pushMessage(
+      `Domain: ${domainPages.label} (${domainPages.id})`
+    );
     const rootPages = domainPages.pages.filter(
       (page) => page.parent_id === null
     );
