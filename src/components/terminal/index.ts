@@ -1,15 +1,24 @@
 import "./style.css";
 
 export interface Terminal {
-  el: HTMLElement;
-  elOverlay: HTMLElement;
+  terminalElement: HTMLElement;
+  overlayElement: HTMLElement;
+  messageWindowElement: HTMLElement;
+  inputWindowElement: HTMLElement;
 }
 
 export class Terminal {
   constructor() {
-    this.el = document.getElementById("terminal") || this.createElement();
-    this.elOverlay =
+    this.terminalElement =
+      document.getElementById("terminal") || this.createElement();
+    this.overlayElement =
       document.getElementById("terminal-overlay") || this.createOverlay();
+    this.messageWindowElement =
+      document.getElementById("terminal-message-window") ||
+      this.createMessageWindow();
+    this.inputWindowElement =
+      document.getElementById("terminal-input-window") ||
+      this.createInputWindow();
   }
 
   createElement() {
@@ -19,8 +28,8 @@ export class Terminal {
     return el;
   }
 
-  clear() {
-    this.el.innerHTML = "";
+  clearMessageWindow() {
+    this.messageWindowElement.innerHTML = "";
   }
 
   createOverlay() {
@@ -30,15 +39,30 @@ export class Terminal {
     return el;
   }
 
-  updateScroll() {
-    this.el.scrollTop = this.el.scrollHeight;
+  createMessageWindow() {
+    let el = document.createElement("div");
+    el.id = "terminal-message-window";
+    this.terminalElement.appendChild(el);
+    return el;
+  }
+
+  createInputWindow() {
+    let el = document.createElement("div");
+    el.id = "terminal-input-window";
+    this.terminalElement.appendChild(el);
+    return el;
+  }
+
+  updateMessageWindowScroll() {
+    this.messageWindowElement.scrollTop =
+      this.messageWindowElement.scrollHeight;
   }
 
   pushMessage(message: string) {
     let messageEl = document.createElement("div");
     messageEl.className = "message";
     messageEl.textContent = message;
-    this.el.appendChild(messageEl);
-    this.updateScroll();
+    this.messageWindowElement.appendChild(messageEl);
+    this.updateMessageWindowScroll();
   }
 }
