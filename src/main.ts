@@ -6,5 +6,4 @@ declare global {
   }
 }
 
-window.publishPages = publishPages;
-window.publishPages();
+publishPages();
